@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Articles;
 use App\Repository\UsersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -41,6 +42,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $lastname = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tokens::class)]
+    private Collection $tokens;
+
     // #[ORM\OneToMany(inversedBy: 'user')]
     // #[ORM\JoinColumn(nullable: false)]
     // private ?Articles $articles = null;
@@ -53,6 +57,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->roles = [self::ROLE_USER];
+        $this->tokens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,5 +165,35 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     //     return $this;
     // }
+
+    /**
+     * @return Collection<int, Tokens>
+     */
+    public function getTokens(): Collection
+    {
+        return $this->tokens;
+    }
+
+    public function addToken(Tokens $token): self
+    {
+        if (!$this->tokens->contains($token)) {
+            $this->tokens->add($token);
+            $token->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeToken(Tokens $token): self
+    {
+        if ($this->tokens->removeElement($token)) {
+            // set the owning side to null (unless already changed)
+            if ($token->getUser() === $this) {
+                $token->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

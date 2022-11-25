@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tokens index{% endblock %}
+
+{% block body %}
+    <h1>Tokens index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Token</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for token in tokens %}
+            <tr>
+                <td>{{ token.id }}</td>
+                <td>{{ token.token }}</td>
+                <td>
+                    <a href="{{ path('app_tokens_show', {'id': token.id}) }}">show</a>
+                    <a href="{{ path('app_tokens_edit', {'id': token.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tokens_new') }}">Create new</a>
+{% endblock %}

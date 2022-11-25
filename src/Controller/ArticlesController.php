@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Articles;
+
 use App\Entity\Users;
+use App\Repository\UsersRepository;
+use App\Entity\Articles;
 use App\Form\ArticlesType;
 use App\Repository\ArticlesRepository;
-use App\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
