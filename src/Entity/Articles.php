@@ -5,9 +5,47 @@ namespace App\Entity;
 use App\Entity\Users;
 use App\Repository\ArticlesRepository;
 use Doctrine\DBAL\Types\Types;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\GetCollection;
+
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+#[ApiResource(
+    security: "is_granted('ROLE_USER')",
+    operations: [
+        new GetCollection(
+            security: "is_granted('ROLE_USER')", 
+            securityMessage: 'Vous devez etre connecté pour voir les articles.'
+        ),
+        new Get(
+            security: "is_granted('ROLE_USER') and object.user == user", 
+            securityMessage: 'Vous devez etre l\'auteur de l\'article pour le voir.'
+        ),
+        new Put(
+            securityPostDenormalize: "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)", 
+            securityPostDenormalizeMessage: 'Vous ne pouvez pas modifier l\'article si vous n\'etes pas administrateur et l\'auteur.'
+        ),
+        new Post(
+            security: "is_granted('ROLE_ADMIN')", 
+            securityMessage: 'Seul les administrateurs peuvent créer de nouveaux articles.'
+        ),
+        new Delete(
+            security: "is_granted('ROLE_ADMIN')", 
+            securityMessage: 'Seul les administrateurs peuvent supprimer article.'
+        )
+    ]
+)]
+
+
 
 #[ORM\Entity(repositoryClass: ArticlesRepository::class)]
+
 class Articles
 {
     #[ORM\Id]
@@ -26,7 +64,8 @@ class Articles
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $user = null;
+    public ?Users $user = null;
+
 
     public function getId(): ?int
     {
@@ -80,4 +119,5 @@ class Articles
 
         return $this;
     }
+
 }

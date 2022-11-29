@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Token</th>
+                <th>Utilisateur</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
             <tr>
                 <td>{{ token.id }}</td>
                 <td>{{ token.token }}</td>
+                <td>{{ token.user.firstname }} {{ token.user.lastname }}</td>
                 <td>
                     <a href="{{ path('app_tokens_show', {'id': token.id}) }}">show</a>
                     <a href="{{ path('app_tokens_edit', {'id': token.id}) }}">edit</a>

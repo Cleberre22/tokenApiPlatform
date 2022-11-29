@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class TokensController extends AbstractController
 {
     #[Route('/', name: 'app_tokens_index', methods: ['GET'])]
+    #[isGranted("ROLE_USER")]
     public function index(TokensRepository $tokensRepository): Response
     {
         return $this->render('tokens/index.html.twig', [
@@ -76,6 +77,7 @@ class TokensController extends AbstractController
 
 
     #[Route('/{id}', name: 'app_tokens_show', methods: ['GET'])]
+    #[isGranted("ROLE_USER")]
     public function show(Tokens $token): Response
     {
         return $this->render('tokens/show.html.twig', [

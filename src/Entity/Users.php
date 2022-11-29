@@ -11,8 +11,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\DBAL\Types\Types;
+use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
+#[ApiResource]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -45,19 +47,14 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tokens::class)]
     private Collection $tokens;
 
-    // #[ORM\OneToMany(inversedBy: 'user')]
-    // #[ORM\JoinColumn(nullable: false)]
-    // private ?Articles $articles = null;
-
-    // public function __construct()
-    // {
-    //     $this->articles = new ArrayCollection()
-    // }
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Articles::class)]
+    private Collection $articles;
 
     public function __construct()
     {
         $this->roles = [self::ROLE_USER];
         $this->tokens = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,6 +187,36 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($token->getUser() === $this) {
                 $token->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+      /**
+     * @return Collection<int, Articles>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Articles $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Articles $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getUser() === $this) {
+                $article->setUser(null);
             }
         }
 

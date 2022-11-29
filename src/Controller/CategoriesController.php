@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class CategoriesController extends AbstractController
 {
     #[Route('/', name: 'app_categories_index', methods: ['GET'])]
+    #[isGranted("ROLE_USER")]
     public function index(CategoriesRepository $categoriesRepository): Response
     {
         return $this->render('categories/index.html.twig', [
@@ -45,6 +46,7 @@ class CategoriesController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_categories_show', methods: ['GET'])]
+    #[isGranted("ROLE_USER")]
     public function show(Categories $category): Response
     {
         return $this->render('categories/show.html.twig', [
