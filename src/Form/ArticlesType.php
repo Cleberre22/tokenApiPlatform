@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Articles;
 use App\Entity\Categories;
+use App\Entity\Tokens;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,6 +26,11 @@ class ArticlesType extends AbstractType
                 'class' => Categories::class,
                 'choice_label' => 'name',
                 'label' => 'Catégorie de l\'article',
+            ])
+            ->add('tokens', EntityType::class, [
+                'class' => Tokens::class,
+                'choice_label' => 'keyName',
+                'label' => 'Clé',
             ]);
     }
 

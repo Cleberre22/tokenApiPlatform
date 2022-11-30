@@ -27,13 +27,6 @@ class TokensController extends AbstractController
         ]);
     }
 
-
-
-
-
-
-
-
     #[Route('/new', name: 'app_tokens_new', methods: ['GET', 'POST'])]
     #[isGranted("ROLE_USER")]
     public function new(Request $request, TokensRepository $tokensRepository, UsersRepository $usersRepository): Response
@@ -43,11 +36,7 @@ class TokensController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $token->setUser($this->getUser());
-           
-
-
-
+        
             // Stockez toutes les lettres possibles dans une chaîne.
             $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $key = '';
@@ -58,6 +47,7 @@ class TokensController extends AbstractController
             }
          
             $token->setKey($key); 
+            $token->setUser($this->getUser());
 
             $tokensRepository->save($token, true);
 
@@ -69,12 +59,6 @@ class TokensController extends AbstractController
             'form' => $form,
         ]);
     }
-
-
-
-
-
-
 
     #[Route('/{id}', name: 'app_tokens_show', methods: ['GET'])]
     #[isGranted("ROLE_USER")]

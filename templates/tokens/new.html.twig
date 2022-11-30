@@ -3,9 +3,12 @@
 {% block title %}New Tokens{% endblock %}
 
 {% block body %}
-    <h1>Create new Tokens</h1>
+<section class="container">
+ <h1 class="my-3">Create new Tokens</h1>
 
     {{ include('tokens/_form.html.twig') }}
 
     <a href="{{ path('app_tokens_index') }}">back to list</a>
+</section>
+   
 {% endblock %}

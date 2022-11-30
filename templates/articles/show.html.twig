@@ -1,30 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Articles{% endblock %}
+{% block title %}Articles
+{% endblock %}
 
 {% block body %}
-    <h1>Articles</h1>
+<section class="container">
+	<h1 class="my-3">Articles</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ article.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ article.content }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ article.id }}</td>
+			</tr>
+			<tr>
+				<th>Title</th>
+				<td>{{ article.title }}</td>
+			</tr>
+			<tr>
+				<th>Content</th>
+				<td>{{ article.content }}</td>
+			</tr>
+			<tr>
+				<th>Auteur</th>
+				<td>{{ article.user.firstname }}
+					{{ article.user.lastname }}</td>
+			</tr>
+			<tr>
+				<th>Nom de la clé</th>
+				<td>{{ article.tokens.keyName }}</td>
+			</tr>
+			<tr>
+				<th>Clé</th>
+				<td>{{ article.tokens.token }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_articles_index') }}">back to list</a>
+	<a href="{{ path('app_articles_index') }}">back to list</a>
 
-    <a href="{{ path('app_articles_edit', {'id': article.id}) }}">edit</a>
+	<a href="{{ path('app_articles_edit', {'id': article.id}) }}">edit</a>
 
-    {{ include('articles/_delete_form.html.twig') }}
+	{{ include('articles/_delete_form.html.twig') }}
+</section>
+
 {% endblock %}

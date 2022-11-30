@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Tokens;
+use App\Form\TokensType;
+use App\Repository\TokensRepository;
 use App\Entity\Users;
 use App\Repository\UsersRepository;
 use App\Entity\Articles;
 use App\Form\ArticlesType;
 use App\Repository\ArticlesRepository;
+use Proxies\__CG__\App\Entity\Tokens as EntityTokens;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +22,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 #[Route('/articles')]
 class ArticlesController extends AbstractController
 {
+
+    // public function tokenPermission(TokensRepository $tokensRepository,): Response
+    // {
+    //     $tokenpermission = ;
+    // }
+
+
     #[Route('/', name: 'app_articles_index', methods: ['GET'])]
     #[isGranted("ROLE_USER")]
     public function index(ArticlesRepository $articlesRepository): Response
@@ -81,7 +91,7 @@ class ArticlesController extends AbstractController
     #[isGranted("ROLE_USER")]
     public function delete(Request $request, Articles $article, ArticlesRepository $articlesRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
             $articlesRepository->remove($article, true);
         }
 
