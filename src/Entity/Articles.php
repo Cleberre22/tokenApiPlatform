@@ -20,8 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
     security: "is_granted('ROLE_USER')",
     operations: [
         new GetCollection(
-            security: "is_granted('ROLE_USER')", 
-            securityMessage: 'Vous devez etre connecté pour voir les articles.'
+            // security: "is_granted('ROLE_USER')", 
+            // securityMessage: 'Vous devez etre connecté pour voir les articles.'
         ),
         new Get(
             security: "is_granted('ROLE_USER') and object.user == user", 
