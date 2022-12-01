@@ -14,6 +14,10 @@
 				<td>{{ article.id }}</td>
 			</tr>
 			<tr>
+				<th>Category</th>
+				<td>{{ article.category.name }}</td>
+			</tr>
+			<tr>
 				<th>Title</th>
 				<td>{{ article.title }}</td>
 			</tr>
@@ -26,14 +30,14 @@
 				<td>{{ article.user.firstname }}
 					{{ article.user.lastname }}</td>
 			</tr>
-			<tr>
+			{# <tr>
 				<th>Nom de la clé</th>
-				<td>{{ article.tokens.keyName }}</td>
-			</tr>
-			<tr>
+				<td>{{ article.token.keyName }}</td>
+			</tr> #}
+			{# <tr>
 				<th>Clé</th>
 				<td>{{ article.tokens.token }}</td>
-			</tr>
+			</tr> #}
 		</tbody>
 	</table>
 

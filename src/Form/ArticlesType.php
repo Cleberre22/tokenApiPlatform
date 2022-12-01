@@ -27,11 +27,12 @@ class ArticlesType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Catégorie de l\'article',
             ])
-            ->add('tokens', EntityType::class, [
-                'class' => Tokens::class,
-                'choice_label' => 'keyName',
-                'label' => 'Clé',
-            ]);
+            // ->add('tokens', EntityType::class, [
+            //     'class' => Tokens::class,
+            //     'choice_label' => 'keyName',
+            //     'label' => 'Clé',
+            // ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

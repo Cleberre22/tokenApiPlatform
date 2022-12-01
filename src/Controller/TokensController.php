@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 #[Route('/tokens')]
 class TokensController extends AbstractController
 {
+    
     #[Route('/', name: 'app_tokens_index', methods: ['GET'])]
     #[isGranted("ROLE_USER")]
     public function index(TokensRepository $tokensRepository): Response

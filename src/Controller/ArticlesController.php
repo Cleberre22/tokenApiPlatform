@@ -23,27 +23,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ArticlesController extends AbstractController
 {
 
-    // public function tokenPermission(TokensRepository $tokensRepository,): Response
-    // {
-    //     $tokenpermission = ;
-    // }
-
 
     #[Route('/', name: 'app_articles_index', methods: ['GET'])]
     // #[isGranted("ROLE_USER")]
     public function index(ArticlesRepository $articlesRepository, TokensRepository $tokensRepository): Response
     {
-        
-        $token = Tokens::class;
-        dd($tokensRepository);
-        if ($token) {
+
             return $this->render('articles/index.html.twig', [
                 'articles' => $articlesRepository->findAll(),
             ]);
-        }
     }
 
     #[Route('/new', name: 'app_articles_new', methods: ['GET', 'POST'])]
+    #[Route('/new2', name: 'app_articles_new2', methods: ['GET', 'POST'])]
     #[isGranted("ROLE_USER")]
     public function new(Request $request, ArticlesRepository $articlesRepository, UsersRepository $usersRepository): Response
     {

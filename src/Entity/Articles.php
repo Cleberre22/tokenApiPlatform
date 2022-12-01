@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             // securityMessage: 'Vous devez etre connecté pour voir les articles.'
         ),
         new Get(
-            security: "is_granted('ROLE_USER') and object.user == user", 
+            security: "is_granted('ROLE_READ') and object.user == user", 
             securityMessage: 'Vous devez etre l\'auteur de l\'article pour le voir.'
         ),
         new Put(

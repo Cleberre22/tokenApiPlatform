@@ -20,5 +20,15 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    user_manager:
+        class: App\Service\UserManager        
+
+    App\EventListener\RequestListener:
+        arguments:
+            - "@user_manager"
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }     
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
