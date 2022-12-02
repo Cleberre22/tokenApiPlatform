@@ -9,7 +9,14 @@ security:
             entity:
                 class: App\Entity\Users
                 property: email
+
+        api_user_provider:
+            entity:
+                class: App\Entity\ApiUser  
+                property: token      
     firewalls:
+        api:
+            provider: api_user_provider
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -33,6 +40,11 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
+        # Role a redéfinir 
+        - { path: ^\/api$, roles: ROLE_API }
+        # Role a redéfinir 
+        # - { path: ^\/api_docs$, roles: ROLE_USER}
 
 when@test:
     security:

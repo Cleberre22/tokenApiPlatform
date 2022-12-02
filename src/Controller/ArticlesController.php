@@ -28,7 +28,6 @@ class ArticlesController extends AbstractController
     // #[isGranted("ROLE_USER")]
     public function index(ArticlesRepository $articlesRepository, TokensRepository $tokensRepository): Response
     {
-
             return $this->render('articles/index.html.twig', [
                 'articles' => $articlesRepository->findAll(),
             ]);
@@ -36,7 +35,7 @@ class ArticlesController extends AbstractController
 
     #[Route('/new', name: 'app_articles_new', methods: ['GET', 'POST'])]
     #[Route('/new2', name: 'app_articles_new2', methods: ['GET', 'POST'])]
-    #[isGranted("ROLE_USER")]
+    // #[isGranted("ROLE_USER")]
     public function new(Request $request, ArticlesRepository $articlesRepository, UsersRepository $usersRepository): Response
     {
         $article = new Articles();
@@ -45,7 +44,6 @@ class ArticlesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $article->setUser($this->getUser());
-            // $this->user_id = $this->doctrine->getRepository(Users::class)->findOneBy([]);
             $articlesRepository->save($article, true);
 
             return $this->redirectToRoute('app_articles_index', [], Response::HTTP_SEE_OTHER);
@@ -66,7 +64,7 @@ class ArticlesController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_articles_edit', methods: ['GET', 'POST'])]
-    #[isGranted("ROLE_USER")]
+    // #[isGranted("ROLE_USER")]
     public function edit(Request $request, Articles $article, ArticlesRepository $articlesRepository): Response
     {
         $form = $this->createForm(ArticlesType::class, $article);
@@ -85,7 +83,7 @@ class ArticlesController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_articles_delete', methods: ['POST'])]
-    #[isGranted("ROLE_USER")]
+    // #[isGranted("ROLE_USER")]
     public function delete(Request $request, Articles $article, ArticlesRepository $articlesRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {

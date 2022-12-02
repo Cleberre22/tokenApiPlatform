@@ -3,5 +3,5 @@ controllers:
     type: attribute
 
 api_doc:
-    path: /api
+    path: /api_docs
     controller: api_platform.swagger_ui.action

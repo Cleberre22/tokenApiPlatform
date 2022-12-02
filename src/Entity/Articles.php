@@ -17,29 +17,29 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ApiResource(
-    security: "is_granted('ROLE_USER')",
-    operations: [
-        new GetCollection(
-            // security: "is_granted('ROLE_USER')", 
-            // securityMessage: 'Vous devez etre connecté pour voir les articles.'
-        ),
-        new Get(
-            security: "is_granted('ROLE_READ') and object.user == user", 
-            securityMessage: 'Vous devez etre l\'auteur de l\'article pour le voir.'
-        ),
-        new Put(
-            securityPostDenormalize: "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)", 
-            securityPostDenormalizeMessage: 'Vous ne pouvez pas modifier l\'article si vous n\'etes pas administrateur et l\'auteur.'
-        ),
-        new Post(
-            security: "is_granted('ROLE_ADMIN')", 
-            securityMessage: 'Seul les administrateurs peuvent créer de nouveaux articles.'
-        ),
-        new Delete(
-            security: "is_granted('ROLE_ADMIN')", 
-            securityMessage: 'Seul les administrateurs peuvent supprimer article.'
-        )
-    ]
+    security: "is_granted('ROLE_BROWSE')",
+    // operations: [
+    //     new GetCollection(
+    //         security: "is_granted('ROLE_Browse')", 
+    //         securityMessage: 'Vous devez etre connecté pour voir les articles.'
+    //     ),
+    //     new Get(
+    //         security: "is_granted('ROLE_USER') and object.user == user", 
+    //         securityMessage: 'Vous devez etre l\'auteur de l\'article pour le voir.'
+    //     ),
+    //     new Put(
+    //         securityPostDenormalize: "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)", 
+    //         securityPostDenormalizeMessage: 'Vous ne pouvez pas modifier l\'article si vous n\'etes pas administrateur et l\'auteur.'
+    //     ),
+    //     new Post(
+    //         security: "is_granted('ROLE_ADMIN')", 
+    //         securityMessage: 'Seul les administrateurs peuvent créer de nouveaux articles.'
+    //     ),
+    //     new Delete(
+    //         security: "is_granted('ROLE_ADMIN')", 
+    //         securityMessage: 'Seul les administrateurs peuvent supprimer article.'
+    //     )
+    // ]
 )]
 
 
