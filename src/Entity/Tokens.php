@@ -90,6 +90,12 @@ class Tokens
 
     public function setPermission(?string $permission): self
     {
+        // $json = $permission;
+
+        // $permission = json_decode($json);
+
+        // dd($permission);
+
         $this->permission = $permission;
 
         return $this;

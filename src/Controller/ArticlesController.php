@@ -25,7 +25,7 @@ class ArticlesController extends AbstractController
 
 
     #[Route('/', name: 'app_articles_index', methods: ['GET'])]
-    // #[isGranted("ROLE_USER")]
+    #[isGranted("ROLE_USER")]
     public function index(ArticlesRepository $articlesRepository, TokensRepository $tokensRepository): Response
     {
             return $this->render('articles/index.html.twig', [

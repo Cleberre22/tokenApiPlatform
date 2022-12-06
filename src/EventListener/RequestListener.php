@@ -49,12 +49,16 @@ class RequestListener
             // // $roles = ["ROLE_USER"];
             $roles = ["ROLE_BROWSE"];
 
-            // // $Role_Categories = ["Browse", "Read"];
+            // // // $Role_Categories = ["Browse", "Read"];
 
-            $apiUser = new ApiUser();
-            $apiUser->setRoles($roles);
-            $token = new UsernamePasswordToken($apiUser, 'api', $apiUser->getRoles());
-            $this->tokenStorage->setToken($token);
+            // $apiUser = new ApiUser();
+            // $apiUser->setRoles($roles);
+            // $apiUser->setToken("SuperToken");
+            // $token = new UsernamePasswordToken($apiUser, 'api', $apiUser->getRoles());
+            // $this->tokenStorage->setToken($token);
+
+            // dd($token);
+
             // $sess = $this->session->set('_security_main', serialize($token));
 
             // $token = new UsernamePasswordToken($apiUser, 'main', $apiUser->getRoles());
