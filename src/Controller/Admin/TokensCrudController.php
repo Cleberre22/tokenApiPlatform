@@ -3,9 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Tokens;
+use App\EasyAdmin\PermissionField;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -20,11 +23,12 @@ class TokensCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
-            TextField::new('token')->hideOnForm(),
-            TextField::new('keyName'),
-            TextEditorField::new('permission'),
-            AssociationField::new('user', 'Utilisateur')->onlyOnIndex(),
+            yield IdField::new('id')->hideOnForm(),
+            yield TextField::new('token')->hideOnForm(),
+            yield TextField::new('keyName'),
+            yield TextareaField::new('permission'),
+            yield AssociationField::new('user', 'Utilisateur')->onlyOnIndex(),
+            // yield PermissionField::new('permission')
         ];
     }
 

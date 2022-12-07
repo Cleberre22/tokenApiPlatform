@@ -54,4 +54,12 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Voir les tokens', 'fas fa-eye', Tokens::class)
         ]);
     }
+
+    public function configureCrud(): Crud
+    {
+        return parent::configureCrud()
+            ->setDefaultSort([
+                'id' => 'DESC',
+            ]);
+    }
 }

@@ -28,7 +28,7 @@ class Tokens
     private ?string $keyName = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $permission = null;
+    private ?array $permission = null;
 
     public function getId(): ?int
     {
@@ -83,12 +83,12 @@ class Tokens
         return $this;
     }
 
-    public function getPermission(): ?string
+    public function getPermission(): ?array
     {
         return $this->permission;
     }
 
-    public function setPermission(?string $permission): self
+    public function setPermission(?array $permission): self
     {
         // $json = $permission;
 
