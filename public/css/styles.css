@@ -1,16 +1,89 @@
+h1 {
+  text-align: center;
+  padding: 30px;
+}
+
 #editor_holder {
   padding: 20px;
+  width: 100%;
+}
+#editor_holder .je-header {
+  display: none;
+}
+#editor_holder .je-object__container {
+  width: 100%;
+}
+#editor_holder .json-editor-btntype-properties i {
+  display: none;
+}
+#editor_holder .json-editor-btntype-properties span {
+  display: none;
+}
+#editor_holder .je-object__controls {
+  padding: 20px;
+  border-radius: 10px;
+}
+#editor_holder .json-editor-btn-edit {
+  margin: 10px;
+  border-radius: 10px;
+  border: 2px solid red !important;
+}
+#editor_holder .json-editor-btn-delete {
+  display: none;
+}
+#editor_holder .json-editor-btn-movedown {
+  display: none;
+}
+#editor_holder .json-editor-btn-moveup {
+  display: none;
+}
+#editor_holder .json-editor-btn-edit_properties {
+  display: none;
+}
+#editor_holder .json-editor-btn-add {
+  margin: 10px;
+  border-radius: 10px;
+  border: 2px solid red !important;
+}
+#editor_holder .json-editor-btn-subtract {
+  margin: 10px;
+  border-radius: 10px;
+  border: 2px solid red !important;
+}
+#editor_holder .je-indented-panel {
+  border-style: none;
 }
 #editor_holder .je-table {
   padding: 20px;
+  border-radius: 10px;
+  border: 2px solid red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
 #editor_holder .je-table .compact {
-  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
 #editor_holder .je-table .control-group {
-  padding: 10px;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 #editor_holder .je-table .form-control {
   margin-bottom: 5px;
-  border-style: none;
+  border: 2px solid rgb(255, 0, 255);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+#editor_holder .compact {
+  width: 100%;
 }/*# sourceMappingURL=styles.css.map */

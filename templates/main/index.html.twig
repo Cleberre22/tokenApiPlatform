@@ -8,10 +8,13 @@
         .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     </style>
 
-    <div class="example-wrapper">
-        <h1>tokenApiPlatform</h1>
 
-        <div class='test column col-md-10' id="editor_holder"></div>
+
+
+    <div class="example-wrapper">
+        <h1 class="text-align-center">tokenApiPlatform</h1>
+
+        <div class='test column col-md-12' id="editor_holder"></div>
         {# <button id='submit'>Submit (console.log)</button> #}
     </div>
 {% endblock %}
@@ -21,11 +24,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
 
     <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+    {# si il y a du json (en edit) alors ne charge pas la simulation de click #}
+
+      console.log("Hello World!");
+
+        var pouet = document.getElementsByClassName('json-editor-btntype-add');
+
+        console.log(pouet[1].click());  
+      });
       // Initialize the editor with a JSON schema
       var editor = new JSONEditor(document.getElementById('editor_holder'),{
         schema: {
           type: "object",
-          {# title: "Token", #}
+          title: "Token",
          
           properties: {
             
@@ -67,7 +81,7 @@
                       uniqueItems: true,
                       items: {
                         type: "string",
-                        enum: ["read", "browse", "edit", "delete"]
+                        enum: ["browse", "read", "edit", "add", "delete"]
                       }
                     },
                   }
@@ -82,7 +96,13 @@
       document.getElementById('submit').addEventListener('click',function() {
         // Get the value from the editor
         console.log(editor.getValue());
+
+       const editor = new JSONEditor(element,{
+          schema: schema,
+          theme: 'bootstrap5'
+        });
       });
+
 
 
 
