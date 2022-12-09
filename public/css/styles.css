@@ -1,0 +1,16 @@
+#editor_holder {
+  padding: 20px;
+}
+#editor_holder .je-table {
+  padding: 20px;
+}
+#editor_holder .je-table .compact {
+  padding: 20px;
+}
+#editor_holder .je-table .control-group {
+  padding: 10px;
+}
+#editor_holder .je-table .form-control {
+  margin-bottom: 5px;
+  border-style: none;
+}/*# sourceMappingURL=styles.css.map */

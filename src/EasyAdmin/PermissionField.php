@@ -24,6 +24,5 @@ class PermissionField implements FieldInterface
             ->setFormType(TextType::class)
             ->addCssClass('field-text')
             ->setDefaultColumns('col-md-12 col-xxl-5');
-       
     }
 }

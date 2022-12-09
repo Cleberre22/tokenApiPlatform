@@ -3,15 +3,114 @@
 {% block title %}tokenApiPlatform{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
 
-<div class="example-wrapper">
-    <h1>tokenApiPlatform</h1>
+    <div class="example-wrapper">
+        <h1>tokenApiPlatform</h1>
 
-    
-   
-</div>
+        <div class='test column col-md-10' id="editor_holder"></div>
+        {# <button id='submit'>Submit (console.log)</button> #}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
+
+    <script>
+      // Initialize the editor with a JSON schema
+      var editor = new JSONEditor(document.getElementById('editor_holder'),{
+        schema: {
+          type: "object",
+          {# title: "Token", #}
+         
+          properties: {
+            
+              /* Entités: {
+                type: "string",
+                 sdfgh: "add row",
+                    enum: [
+                      "Articles",
+                      "Category",
+                    ]
+                },
+              Permissions: {
+                type: "array",
+                uniqueItems: true,
+                items: {
+                  type: "string",
+                  enum: ["read", "browse", "edit", "delete"]
+                }
+              }, */
+              
+              tokens: {
+                type: 'array',
+                format: 'table',
+                title: 'Token',
+                items: {
+                  type: 'object',
+                  title: 'Entity',
+                    properties: {
+                      Entités: {
+                        type: 'string',
+                        enum: [
+                          "Articles",
+                          "Category",
+                        ],
+                        
+                      },
+                    Permissions: {
+                      type: "array",
+                      uniqueItems: true,
+                      items: {
+                        type: "string",
+                        enum: ["read", "browse", "edit", "delete"]
+                      }
+                    },
+                  }
+                },
+                
+              } 
+          }
+        }
+      });
+
+      // Hook up the submit button to log to the console
+      document.getElementById('submit').addEventListener('click',function() {
+        // Get the value from the editor
+        console.log(editor.getValue());
+      });
+
+
+
+        /* document.addEventListener("DOMContentLoaded", () => {
+            const element = document.getElementById('editor_holder');
+
+            const options = {
+                theme: 'bootstrap4'
+            }
+
+            const editor = new JSONEditor(element, options);
+
+            {# editor.setValue({name: "John Smith"});
+
+            const value = editor.getValue();
+            console.log(value.name) // Will log "John Smith"
+
+            // Get a reference to a node within the editor
+            const name = editor.getEditor('root.name');
+
+            // `getEditor` will return null if the path is invalid
+            if (name) {
+                name.setValue("John Smith");
+
+                console.log(name.getValue());
+            } #}
+        }); */
+        
+
+    </script>
 {% endblock %}

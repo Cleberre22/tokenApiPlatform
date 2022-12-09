@@ -17,9 +17,9 @@ use Doctrine\ORM\Mapping as ORM;
 class ApiUser implements UserInterface
 {
     // #[Id, GeneratedValue, Column(type: 'integer')]
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    // #[ORM\Id]
+    // #[ORM\GeneratedValue]
+    // #[ORM\Column]
     private ?int $id = null;
 
     private array $roles = [];

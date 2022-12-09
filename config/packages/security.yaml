@@ -10,13 +10,13 @@ security:
                 class: App\Entity\Users
                 property: email
 
-        api_user_provider:
+        token_provider:
             entity:
-                class: App\Entity\ApiUser  
+                class: App\Entity\Tokens  
                 property: token      
     firewalls:
-        # api:
-        #     provider: api_user_provider
+        api:
+            provider: token_provider
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false

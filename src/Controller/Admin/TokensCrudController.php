@@ -7,7 +7,7 @@ use App\EasyAdmin\PermissionField;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -26,9 +26,9 @@ class TokensCrudController extends AbstractCrudController
             yield IdField::new('id')->hideOnForm(),
             yield TextField::new('token')->hideOnForm(),
             yield TextField::new('keyName'),
-            yield TextareaField::new('permission'),
+            // yield TextareaField::new('permission'),
             yield AssociationField::new('user', 'Utilisateur')->onlyOnIndex(),
-            // yield PermissionField::new('permission')
+            yield PermissionField::new('permission')
         ];
     }
 

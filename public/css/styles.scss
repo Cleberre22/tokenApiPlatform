@@ -1,0 +1,48 @@
+// h1 {
+//     color: rgb(165, 112, 42);
+// } 
+
+#editor_holder {
+    // background-color: darksalmon !important;
+    padding: 20px;
+    // border: 2px solid red;
+
+    // .json-editor-btntype-properties i {
+    //     border: 2px solid red !important;
+    //     display: none;
+    //   }
+    
+    //   .json-editor-btntype-properties span {
+    //     border: 2px solid red !important;
+    //      display: none;
+    //   }  
+    
+    //   .je-indented-panel {
+    //     border-style: none;
+    //   }
+
+      .je-table {
+        padding: 20px;
+        // border: 2px solid red;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        // flex-direction: column;
+        // background-color: darkseagreen;
+        .compact {
+          padding: 20px;
+        }
+        .control-group {
+            padding: 10px;
+        }
+        .form-control {
+            margin-bottom: 5px;
+            border-style: none;
+        }
+      }
+    //   h3 {
+    //     display: none;
+    //   }
+}
+
+

@@ -2,76 +2,44 @@
 
 namespace App\EventListener;
 
+use App\Entity\Tokens;
+use App\Repository\TokensRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Twig\Environment;
-use App\Entity\ApiUser;
-
-use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class RequestListener
 {
-    private $sam;
+    private $entityManager;
     private $tokenStorage;
-    private $session;
-
-    // public function __construct(TokenStorageInterface $sam)
-    // {
-    //     $this->sam = $sam;
-    // }
-
-    // public function __construct(
-    //     private TokenStorageInterface $tokenStorage,
-    // ) {
-    // }
 
     public function __construct(
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager
     ) {
+        $this->entityManager = $entityManager;
         $this->tokenStorage = $tokenStorage;
-        // $this->session = $session;
     }
+
 
     public function onKernelRequest(RequestEvent $event): void
     {
-
         $request = $event->getRequest();
 
         $currentUri = $request->getRequestUri();
 
         if (str_starts_with($currentUri, "/api/")) {
             // // dd("ok");
-
-            // // $roles = ["ROLE_USER"];
             $roles = ["ROLE_BROWSE"];
-
-            // // // $Role_Categories = ["Browse", "Read"];
-
-            // $apiUser = new ApiUser();
-            // $apiUser->setRoles($roles);
-            // $apiUser->setToken("SuperToken");
-            // $token = new UsernamePasswordToken($apiUser, 'api', $apiUser->getRoles());
-            // $this->tokenStorage->setToken($token);
-
-            // dd($token);
-
-            // $sess = $this->session->set('_security_main', serialize($token));
-
-            // $token = new UsernamePasswordToken($apiUser, 'main', $apiUser->getRoles());
-            // $authenticatedToken = $this->authenticationManager->authenticate($token);
-            // $this->tokenStorage->setToken($authenticatedToken);
-
-            // $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-            // $this->get("security.token_storage")->setToken($token);
-
-            // // $roles = [''];
-
             
+            $tokenUserRepository = $this->entityManager->getRepository(Tokens::class);
 
+            $tokenUser = $tokenUserRepository->findOneByToken("afBmY7SVesyGxor0aaGZTQ7K5gpoQh9kUlo");
+            
+            $token = new UsernamePasswordToken($tokenUser, 'api', $roles);
+            $this->tokenStorage->setToken($token);
+         
         }
     }
 }

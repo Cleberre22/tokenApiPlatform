@@ -3,14 +3,15 @@
 namespace App\Entity;
 
 use App\Entity\Users;
-use App\Repository\TokensRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TokensRepository;
 use ApiPlatform\Metadata\ApiResource;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: TokensRepository::class)]
 #[ApiResource]
-class Tokens
+class Tokens implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -28,7 +29,50 @@ class Tokens
     private ?string $keyName = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?array $permission = null;
+    private ?string $permission = null;
+
+    private array $roles = [];
+
+
+    public function serialize() {
+        return serialize($this->id);
+        }
+    
+        public function unserialize($data) {
+        $this->id = unserialize($data);
+        }
+
+
+       /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->token;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(?array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -83,12 +127,12 @@ class Tokens
         return $this;
     }
 
-    public function getPermission(): ?array
+    public function getPermission(): ?string
     {
         return $this->permission;
     }
 
-    public function setPermission(?array $permission): self
+    public function setPermission(?string $permission): self
     {
         // $json = $permission;
 
