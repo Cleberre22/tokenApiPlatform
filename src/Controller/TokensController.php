@@ -14,11 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 #[Route('/tokens')]
 class TokensController extends AbstractController
 {
-    
+
     #[Route('/', name: 'app_tokens_index', methods: ['GET'])]
     #[isGranted("ROLE_USER")]
     public function index(TokensRepository $tokensRepository): Response
@@ -28,16 +30,30 @@ class TokensController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_tokens_new', methods: ['GET', 'POST'])]
-    #[isGranted("ROLE_USER")]
-    public function new(Request $request, TokensRepository $tokensRepository, UsersRepository $usersRepository): Response
-    {   $strTotal = 35;
+
+
+
+
+    #[Route('/add', name: 'app_tokens_create', methods: ['GET', 'POST'])]
+    // #[isGranted("ROLE_USER")]
+    public function create(Request $request, TokensRepository $tokensRepository): Response
+    {
+        $strTotal = 35;
         $token = new Tokens();
-        $form = $this->createForm(TokensType::class, $token);
+        $form = $this->createFormBuilder($token)
+            ->add('keyName')
+            ->add('permission', CheckboxType::class, [
+                'label' => 'Browse'
+                // 'label' => 'Read',
+                // 'label' => 'Edit',
+            ])
+            // ->add('save', SubmitType::class, ['label' => 'Créer le token'])
+            ->getForm();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-        
+
             // Stockez toutes les lettres possibles dans une chaîne.
             $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $key = '';
@@ -46,8 +62,44 @@ class TokensController extends AbstractController
                 $index = rand(0, strlen($str) - 1);
                 $key .= $str[$index];
             }
-         
-            $token->setKey($key); 
+
+            $token->setKey($key);
+            $token->setUser($this->getUser());
+
+            $tokensRepository->save($token, true);
+
+            return $this->redirectToRoute('app_tokens_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('tokens/addToken.html.twig', [
+            'formToken' => $form->createView()
+        ]);
+    }
+
+
+
+
+    #[Route('/new', name: 'app_tokens_new', methods: ['GET', 'POST'])]
+    #[isGranted("ROLE_USER")]
+    public function new(Request $request, TokensRepository $tokensRepository, UsersRepository $usersRepository): Response
+    {
+        $strTotal = 35;
+        $token = new Tokens();
+        $form = $this->createForm(TokensType::class, $token);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // Stockez toutes les lettres possibles dans une chaîne.
+            $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $key = '';
+            // Générez un index aléatoire de 0 à la longueur de la chaîne -1.
+            for ($i = 0; $i < $strTotal; $i++) {
+                $index = rand(0, strlen($str) - 1);
+                $key .= $str[$index];
+            }
+
+            $token->setKey($key);
             $token->setUser($this->getUser());
 
             $tokensRepository->save($token, true);

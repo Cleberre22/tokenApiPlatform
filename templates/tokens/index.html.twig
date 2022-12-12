@@ -28,6 +28,7 @@
 						<td>
 							<a href="{{ path('app_tokens_show', {'id': token.id}) }}">show</a>
 							<a href="{{ path('app_tokens_edit', {'id': token.id}) }}">edit</a>
+							{{ include('tokens/_delete_form.html.twig') }}
 						</td>
 					</tr>
 				{% else %}

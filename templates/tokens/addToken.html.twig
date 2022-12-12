@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Token
+{% endblock %}
+
+{% block body %}
+	<section class="container">
+		<h1 class="my-3">Créer un nouveau Token</h1>
+
+
+		<div class="container d-flex justify-content-center">
+			<div class="row col-lg-12 mb-3">
+				{{ form_start(formToken) }}
+				<div class="row">
+					<div class="col-lg-6 col-md-12">
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1">Nom du token:</span>
+							{{ form_widget(formToken.keyName) }}
+						</div>
+					</div>
+
+				</div>
+				<div class="col-lg-6 col-md-12">
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon1">Droit accordé au token :</span>
+						{{ form_widget(formToken.permission) }}
+					</div>
+				</div>
+
+				<div class="col-lg-6 col-md-12 mb-3">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+						<label class="form-check-label" for="flexCheckDefault">
+							BROWSE
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+						<label class="form-check-label" for="flexCheckChecked">
+							READ
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+						<label class="form-check-label" for="flexCheckChecked">
+							EDIT
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+						<label class="form-check-label" for="flexCheckChecked">
+							ADD
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+						<label class="form-check-label" for="flexCheckChecked">
+							DELETE
+						</label>
+					</div>
+				</div>
+
+                <button type="submit" class="btn btn-primary">Créer le token</button>
+				{{ form_end(formToken) }}
+			</div>
+		</div>
+		{# {{ include('tokens/_form.html.twig') }} #}
+
+		{# <a href="{{ path('app_tokens_index') }}">back to list</a> #}
+	</section>
+
+{% endblock %}

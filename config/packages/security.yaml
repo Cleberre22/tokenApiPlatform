@@ -15,8 +15,8 @@ security:
                 class: App\Entity\Tokens  
                 property: token      
     firewalls:
-        api:
-            provider: token_provider
+        # api:
+        #     provider: token_provider
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false

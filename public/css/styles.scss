@@ -5,43 +5,33 @@ h1 {
 
 #editor_holder {
 
-
     .je-header {
-      // border: 2px solid red !important;
       display: none;
     }
-    // background-color: darksalmon !important;
-    // border: 2px solid rgb(0, 213, 255);
-    padding: 20px;
     width: 100%;
-    // border: 2px solid red;
-
+    padding: 0;
     .je-object__container {
       width: 100%;
-      // border: 2px solid rgb(0, 255, 128);
     }
 
     .json-editor-btntype-properties i {
-        // border: 2px solid red !important;
         display: none;
       }
     
       .json-editor-btntype-properties span {
-        // border: 2px solid red !important;
          display: none;
       }  
 
       .je-object__controls {
         padding: 20px;
         border-radius: 10px;
-        // border: 2px solid red !important;
       }
 
       .json-editor-btn-edit {
-        margin: 10px;
-        border-radius: 10px;
-        border: 2px solid red !important;
-        // background-color: aqua;
+        padding: 5px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        border: 1px solid #333;
       }
 
       .json-editor-btn-delete {
@@ -58,77 +48,84 @@ h1 {
 
       .json-editor-btn-edit_properties {
         display: none;
-        // margin: 10px;
-        // border-radius: 10px;
-        // border: 2px solid red !important;
-        // background-color: aqua;
       }
 
       .json-editor-btn-add {
-        margin: 10px;
-        border-radius: 10px;
-        border: 2px solid red !important;
+        border-radius: 8px;
+        background-color: #ffffff;
+        border: 1px solid #333;
+        padding: 5px;
       }
 
       .json-editor-btn-subtract {
-        margin: 10px;
-        border-radius: 10px;
-        border: 2px solid red !important;
+        border-radius: 8px;
+        background-color: #ffffff;
+        border: 1px solid #333;
+        margin-left: 10px;
+        padding: 5px;
       }
     
       .je-indented-panel {
         border-style: none;
       }
-      .je-indented-panel {
-        // border-style: none;
-        // border: 2px solid rgb(242, 255, 0);
-      }
 
       .je-table {
         padding: 20px;
+        margin-bottom: 30px;
         border-radius: 10px;
-        border: 2px solid red;
+        border: 1px solid #333;
         display: flex;
         justify-content:space-between;
         align-items:center;
         flex-direction: column;
         width: 100%;
-        // background-color: darkseagreen;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+
         .compact {
-          // border: 2px solid red !important;
-          // padding: 20px;
           display: flex;
           justify-content:space-between;
           align-items:center;
           flex-direction: column;
           width: 100%;
+          margin-top: 20px;
         }
         .control-group {
-            // border: 2px solid rgb(51, 0, 255);
             padding: 30px;
             display:flex;
             justify-content: center;
             width: 100%;
-            // background-color: darkseagreen;
+            @media only screen and (max-width: 900px) {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+            }
+            .form-control {
+              min-width: 100px;
+              margin-right: 0;
+              border: 1px solid #333;
+              @media only screen and (max-width: 900px) {
+                margin-bottom: 20px;
+              }
+            }
         }
         .form-control {
-            margin-bottom: 5px;
-            // border-style: none;
-            // padding: 20px;
-            border: 2px solid rgb(255, 0, 255);
-            display: flex;
+          display: flex;
           justify-content:space-between;
           align-items:center;
           flex-direction: column;
+          border-style: none;
+          width: min-content;
         }
       }
 
       .compact {
         width: 100%;
       }
-    //   h3 {
-    //     display: none;
-    //   }
+
+    .je-table th {
+      display: none;
+    }
 }
 
 

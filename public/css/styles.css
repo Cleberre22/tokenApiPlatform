@@ -4,8 +4,8 @@ h1 {
 }
 
 #editor_holder {
-  padding: 20px;
   width: 100%;
+  padding: 0;
 }
 #editor_holder .je-header {
   display: none;
@@ -24,9 +24,10 @@ h1 {
   border-radius: 10px;
 }
 #editor_holder .json-editor-btn-edit {
-  margin: 10px;
-  border-radius: 10px;
-  border: 2px solid red !important;
+  padding: 5px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border: 1px solid #333;
 }
 #editor_holder .json-editor-btn-delete {
   display: none;
@@ -41,27 +42,32 @@ h1 {
   display: none;
 }
 #editor_holder .json-editor-btn-add {
-  margin: 10px;
-  border-radius: 10px;
-  border: 2px solid red !important;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border: 1px solid #333;
+  padding: 5px;
 }
 #editor_holder .json-editor-btn-subtract {
-  margin: 10px;
-  border-radius: 10px;
-  border: 2px solid red !important;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border: 1px solid #333;
+  margin-left: 10px;
+  padding: 5px;
 }
 #editor_holder .je-indented-panel {
   border-style: none;
 }
 #editor_holder .je-table {
   padding: 20px;
+  margin-bottom: 30px;
   border-radius: 10px;
-  border: 2px solid red;
+  border: 1px solid #333;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
   width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
 }
 #editor_holder .je-table .compact {
   display: flex;
@@ -69,6 +75,7 @@ h1 {
   align-items: center;
   flex-direction: column;
   width: 100%;
+  margin-top: 20px;
 }
 #editor_holder .je-table .control-group {
   padding: 30px;
@@ -76,14 +83,37 @@ h1 {
   justify-content: center;
   width: 100%;
 }
+@media only screen and (max-width: 900px) {
+  #editor_holder .je-table .control-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+#editor_holder .je-table .control-group .form-control {
+  min-width: 100px;
+  margin-right: 0;
+  border: 1px solid #333;
+}
+@media only screen and (max-width: 900px) {
+  #editor_holder .je-table .control-group .form-control {
+    margin-bottom: 20px;
+  }
+}
 #editor_holder .je-table .form-control {
-  margin-bottom: 5px;
-  border: 2px solid rgb(255, 0, 255);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+  border-style: none;
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
 }
 #editor_holder .compact {
   width: 100%;
+}
+#editor_holder .je-table th {
+  display: none;
 }/*# sourceMappingURL=styles.css.map */
