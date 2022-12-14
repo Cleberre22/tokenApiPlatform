@@ -5,68 +5,104 @@
 
 {% block body %}
 	<section class="container">
+
 		<h1 class="my-3">Créer un nouveau Token</h1>
 
+		<div class="col-lg-12 col-md-12 mb-3 d-flex justify-content-center formToken">
 
-		<div class="container d-flex justify-content-center">
-			<div class="row col-lg-12 mb-3">
-				{{ form_start(formToken) }}
-				<div class="row">
-					<div class="col-lg-6 col-md-12">
-						<div class="input-group mb-3">
-							<span class="input-group-text" id="basic-addon1">Nom du token:</span>
-							{{ form_widget(formToken.keyName) }}
+			<form method="post" class="col-lg-6 col-md-12" id="formToken">
+
+				<div class="form-group mb-5">
+					<label class="mb-3" for="keyName">Nom du token:</label>
+					<input type="text" name="keyName" id="keyName" class="form-control" placeholder="Entrez le nom du token">
+				</div>
+
+				<p>Ajoutez des droits au token:</p>
+
+				{% for entity in entities %}
+
+					<div class="form-group mb-3 permissionCheckbox">
+						<div class="nameEntity">
+							{{entity}}:
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="browse" name="entities[{{loop.index0}}][browse]" id="entities_{{entity}}_browse">
+							<label class="form-check-label" for="entities_{{entity}}_browse">
+								BROWSE
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="read" name="entities[{{loop.index0}}][read]" id="entities_{{entity}}_read">
+							<label class="form-check-label" for="entities_{{entity}}_read">
+								READ
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="1" name="entities[{{loop.index0}}][edit]" id="entities_{{entity}}_edit">
+							<label class="form-check-label" for="entities_{{entity}}_edit">
+								EDIT
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="1" name="entities[{{loop.index0}}][add]" id="entities_{{entity}}_add">
+							<label class="form-check-label" for="entities_{{entity}}_add">
+								ADD
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="1" name="entities[{{loop.index0}}][delete]" id="entities_{{entity}}_delete">
+							<label class="form-check-label" for="entities_{{entity}}_delete">
+								DELETE
+							</label>
 						</div>
 					</div>
+				{% endfor %}
 
-				</div>
-				<div class="col-lg-6 col-md-12">
-					<div class="input-group mb-3">
-						<span class="input-group-text" id="basic-addon1">Droit accordé au token :</span>
-						{{ form_widget(formToken.permission) }}
-					</div>
-				</div>
+			</form>
 
-				<div class="col-lg-6 col-md-12 mb-3">
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-						<label class="form-check-label" for="flexCheckDefault">
-							BROWSE
-						</label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-						<label class="form-check-label" for="flexCheckChecked">
-							READ
-						</label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-						<label class="form-check-label" for="flexCheckChecked">
-							EDIT
-						</label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-						<label class="form-check-label" for="flexCheckChecked">
-							ADD
-						</label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-						<label class="form-check-label" for="flexCheckChecked">
-							DELETE
-						</label>
-					</div>
-				</div>
+<button type="button" class="btn btn-primary" onclick="submitform()" id="submitform">Créer le token</button>
+            <p id="demo"></p>
 
-                <button type="submit" class="btn btn-primary">Créer le token</button>
-				{{ form_end(formToken) }}
-			</div>
 		</div>
-		{# {{ include('tokens/_form.html.twig') }} #}
-
-		{# <a href="{{ path('app_tokens_index') }}">back to list</a> #}
+		
+		
 	</section>
+{% endblock %}
 
+
+{% block javascripts %}
+	<script>
+
+	  function submitform() {
+
+		var form = document.getElementById('formToken');
+		var formData = new FormData(form);	
+		console.log(Object.fromEntries(formData));
+
+		const ajax = async (config) => {
+			const request = await fetch(config.url, {
+				method: config.method,
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(config.payload)
+			});
+			response = await request.json();
+			console.log('response', response)
+			return response
+		}
+
+		// usage
+		response = ajax({
+			method: 'POST',
+			url: 'save',
+			payload: {"name": "Stackoverflow"}
+		})
+
+		document.getElementById("formToken").innerHTML = "Hello World"; 
+		 console.log(ajax);
+		}
+		
+	</script>
 {% endblock %}

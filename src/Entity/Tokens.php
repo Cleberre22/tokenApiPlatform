@@ -28,22 +28,22 @@ class Tokens implements UserInterface
     #[ORM\Column(length: 100)]
     private ?string $keyName = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $permission = null;
-
     private array $roles = [];
 
+    #[ORM\Column]
+    private array $permission = [];
 
-    public function serialize() {
+    public function serialize()
+    {
         return serialize($this->id);
-        }
-    
-        public function unserialize($data) {
+    }
+
+    public function unserialize($data)
+    {
         $this->id = unserialize($data);
-        }
+    }
 
-
-       /**
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -127,19 +127,13 @@ class Tokens implements UserInterface
         return $this;
     }
 
-    public function getPermission(): ?string
+    public function getPermission(): array
     {
         return $this->permission;
     }
 
-    public function setPermission(?string $permission): self
+    public function setPermission(array $permission): self
     {
-        // $json = $permission;
-
-        // $permission = json_decode($json);
-
-        // dd($permission);
-
         $this->permission = $permission;
 
         return $this;

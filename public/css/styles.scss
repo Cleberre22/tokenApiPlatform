@@ -129,3 +129,19 @@ h1 {
 }
 
 
+.permissionCheckbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  .form-check {
+    margin-right: 15px;
+  }
+}
+
+.nameEntity {
+  margin-right: 10px;
+}
+// .formToken {
+//   background-color: aqua;
+// }

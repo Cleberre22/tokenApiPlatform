@@ -116,4 +116,18 @@ h1 {
 }
 #editor_holder .je-table th {
   display: none;
+}
+
+.permissionCheckbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.permissionCheckbox .form-check {
+  margin-right: 15px;
+}
+
+.nameEntity {
+  margin-right: 10px;
 }/*# sourceMappingURL=styles.css.map */

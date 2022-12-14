@@ -2,20 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Users;
-use App\Repository\UsersRepository;
 use App\Entity\Tokens;
 use App\Form\TokensType;
+use App\Repository\UsersRepository;
 use App\Repository\TokensRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/tokens')]
 class TokensController extends AbstractController
@@ -31,30 +26,55 @@ class TokensController extends AbstractController
     }
 
 
+    // #[Route('/add', name: 'app_tokens_create', methods: ['GET', 'POST'])]
+    // // #[isGranted("ROLE_USER")]
+    // public function create(Request $request, TokensRepository $tokensRepository): Response
+    // {
+    //     $entities = ["article", "category"];
+    //     if ($request->request->count() > 0) {
+    //         $strTotal = 35;
+    //         $token = new Tokens();
+    //         //Stockez toutes les lettres possibles dans une chaîne.
+    //         $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    //         $key = '';
+    //         // Générez un index aléatoire de 0 à la longueur de la chaîne -1.
+    //         for ($i = 0; $i < $strTotal; $i++) {
+    //             $index = rand(0, strlen($str) - 1);
+    //             $key .= $str[$index];
+    //         }
 
+    //         // dd($request->request->get('entities'));
 
+    //         $token->setKey($key);
+    //         $token->setKeyName($request->request->get('keyName'))
+    //               ->setPermission($request->request->get('entities'));
+    //         $token->setUser($this->getUser());
 
-    #[Route('/add', name: 'app_tokens_create', methods: ['GET', 'POST'])]
+    //         $tokensRepository->save($token, true);
+    //     }
+    //     // dd($request);
+    //     return $this->render('tokens/addToken.html.twig', ["entities" =>$entities] );
+    // }
+
+    #[Route('/displayform', name: 'app_tokens_displayform', methods: ['GET'])]
     // #[isGranted("ROLE_USER")]
-    public function create(Request $request, TokensRepository $tokensRepository): Response
+    public function create(): Response
     {
-        $strTotal = 35;
-        $token = new Tokens();
-        $form = $this->createFormBuilder($token)
-            ->add('keyName')
-            ->add('permission', CheckboxType::class, [
-                'label' => 'Browse'
-                // 'label' => 'Read',
-                // 'label' => 'Edit',
-            ])
-            // ->add('save', SubmitType::class, ['label' => 'Créer le token'])
-            ->getForm();
+        $entities = ["article", "category"];
 
-        $form->handleRequest($request);
+        return $this->render('tokens/addToken.html.twig', ["entities" => $entities]);
+    }
 
-        if ($form->isSubmitted() && $form->isValid()) {
 
-            // Stockez toutes les lettres possibles dans une chaîne.
+    #[Route('/save', name: 'app_tokens_save', methods: ['GET', 'POST'])]
+    // #[isGranted("ROLE_USER")]
+    public function save(Request $request, TokensRepository $tokensRepository): Response
+    {
+        $entities = ["article", "category"];
+        if ($request->request->count() > 0) {
+            $strTotal = 35;
+            $token = new Tokens();
+            //Stockez toutes les lettres possibles dans une chaîne.
             $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $key = '';
             // Générez un index aléatoire de 0 à la longueur de la chaîne -1.
@@ -63,20 +83,18 @@ class TokensController extends AbstractController
                 $key .= $str[$index];
             }
 
+            // dd($request->request->get('entities'));
+
             $token->setKey($key);
+            $token->setKeyName($request->request->get('keyName'))
+                  ->setPermission($request->request->get('entities'));
             $token->setUser($this->getUser());
 
             $tokensRepository->save($token, true);
-
-            return $this->redirectToRoute('app_tokens_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->render('tokens/addToken.html.twig', [
-            'formToken' => $form->createView()
-        ]);
+        // dd($request);
+        return $this->render('tokens/addToken.html.twig', ["entities" => $entities]);
     }
-
-
 
 
     #[Route('/new', name: 'app_tokens_new', methods: ['GET', 'POST'])]
