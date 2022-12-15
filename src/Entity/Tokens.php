@@ -30,9 +30,6 @@ class Tokens implements UserInterface
 
     private array $roles = [];
 
-    // #[ORM\Column]
-    // private array $permission = [];
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $permission = null;
 
@@ -129,18 +126,6 @@ class Tokens implements UserInterface
 
         return $this;
     }
-
-    // public function getPermission(): array
-    // {
-    //     return $this->permission;
-    // }
-
-    // public function setPermission(array $permission): self
-    // {
-    //     $this->permission = $permission;
-
-    //     return $this;
-    // }
 
     public function getPermission(): ?string
     {

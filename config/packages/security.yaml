@@ -15,8 +15,9 @@ security:
                 class: App\Entity\Tokens  
                 property: token      
     firewalls:
-        # api:
-        #     provider: token_provider
+        api:
+            provider: token_provider
+            pattern: ^/api/
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -42,7 +43,7 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
 
         # Role a redéfinir 
-        - { path: ^\/api$, roles: ROLE_API }
+        - { path: ^\/api$, roles: ROLE_USER }
         # Role a redéfinir 
         - { path: ^\/api_docs$, roles: ROLE_USER}
 

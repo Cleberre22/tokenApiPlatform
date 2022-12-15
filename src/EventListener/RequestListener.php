@@ -35,9 +35,10 @@ class RequestListener
             
             $tokenUserRepository = $this->entityManager->getRepository(Tokens::class);
 
-            $tokenUser = $tokenUserRepository->findOneByToken("afBmY7SVesyGxor0aaGZTQ7K5gpoQh9kUlo");
-            
+            $tokenUser = $tokenUserRepository->findOneByToken("NSRjZVwqXHYKPqnuDbnPrScrIka8npjNvfX");
+            dd($tokenUser);
             $token = new UsernamePasswordToken($tokenUser, 'api', $roles);
+            // $token->
             $this->tokenStorage->setToken($token);
          
         }
