@@ -6,11 +6,14 @@ use App\Entity\Tokens;
 use App\Form\TokensType;
 use App\Repository\UsersRepository;
 use App\Repository\TokensRepository;
+use Masterminds\HTML5\Entities;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Constraints\Json;
 
 #[Route('/tokens')]
 class TokensController extends AbstractController
@@ -58,7 +61,7 @@ class TokensController extends AbstractController
 
     #[Route('/displayform', name: 'app_tokens_displayform', methods: ['GET'])]
     // #[isGranted("ROLE_USER")]
-    public function create(): Response
+    public function displayForm(): Response
     {
         $entities = ["article", "category"];
 
@@ -71,7 +74,15 @@ class TokensController extends AbstractController
     public function save(Request $request, TokensRepository $tokensRepository): Response
     {
         $entities = ["article", "category"];
-        if ($request->request->count() > 0) {
+        // if ($request->request->count() > 0) {
+            $payload = $request->getContent();
+            $data = json_decode($payload);
+            // dd($payload);
+            $permission = $data->entities; 
+            $data->entities = json_encode($permission);
+            // dd($permission);
+
+
             $strTotal = 35;
             $token = new Tokens();
             //Stockez toutes les lettres possibles dans une chaîne.
@@ -83,53 +94,57 @@ class TokensController extends AbstractController
                 $key .= $str[$index];
             }
 
-            // dd($request->request->get('entities'));
-
             $token->setKey($key);
-            $token->setKeyName($request->request->get('keyName'))
-                  ->setPermission($request->request->get('entities'));
+            $token->setKeyName($data->token);
+            $token->setPermission($data->entities);
             $token->setUser($this->getUser());
 
             $tokensRepository->save($token, true);
-        }
-        // dd($request);
-        return $this->render('tokens/addToken.html.twig', ["entities" => $entities]);
-    }
-
-
-    #[Route('/new', name: 'app_tokens_new', methods: ['GET', 'POST'])]
-    #[isGranted("ROLE_USER")]
-    public function new(Request $request, TokensRepository $tokensRepository, UsersRepository $usersRepository): Response
-    {
-        $strTotal = 35;
-        $token = new Tokens();
-        $form = $this->createForm(TokensType::class, $token);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            // Stockez toutes les lettres possibles dans une chaîne.
-            $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $key = '';
-            // Générez un index aléatoire de 0 à la longueur de la chaîne -1.
-            for ($i = 0; $i < $strTotal; $i++) {
-                $index = rand(0, strlen($str) - 1);
-                $key .= $str[$index];
-            }
-
-            $token->setKey($key);
-            $token->setUser($this->getUser());
-
-            $tokensRepository->save($token, true);
-
-            return $this->redirectToRoute('app_tokens_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('tokens/new.html.twig', [
-            'token' => $token,
-            'form' => $form,
+            // dd($token);
+        // }
+        // dd($token);
+        return new JsonResponse([
+            'success' => true,
+            // 'keyName' => $token->getKeyName(),
+            // 'entities' => $token->getPermission([]),
         ]);
+        
     }
+
+
+    // #[Route('/new', name: 'app_tokens_new', methods: ['GET', 'POST'])]
+    // #[isGranted("ROLE_USER")]
+    // public function new(Request $request, TokensRepository $tokensRepository, UsersRepository $usersRepository): Response
+    // {
+    //     $strTotal = 35;
+    //     $token = new Tokens();
+    //     $form = $this->createForm(TokensType::class, $token);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+
+    //         // Stockez toutes les lettres possibles dans une chaîne.
+    //         $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    //         $key = '';
+    //         // Générez un index aléatoire de 0 à la longueur de la chaîne -1.
+    //         for ($i = 0; $i < $strTotal; $i++) {
+    //             $index = rand(0, strlen($str) - 1);
+    //             $key .= $str[$index];
+    //         }
+
+    //         $token->setKey($key);
+    //         $token->setUser($this->getUser());
+
+    //         $tokensRepository->save($token, true);
+
+    //         return $this->redirectToRoute('app_tokens_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->renderForm('tokens/new.html.twig', [
+    //         'token' => $token,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{id}', name: 'app_tokens_show', methods: ['GET'])]
     #[isGranted("ROLE_USER")]

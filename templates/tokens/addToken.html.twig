@@ -21,36 +21,36 @@
 
 				{% for entity in entities %}
 
-					<div class="form-group mb-3 permissionCheckbox">
+					<div class="form-group mb-3 permissionCheckbox entityPermissions" data-entity="{{entity}}">
 						<div class="nameEntity">
 							{{entity}}:
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="browse" name="entities[{{loop.index0}}][browse]" id="entities_{{entity}}_browse">
+							<input class="form-check-input" type="checkbox" value="browse" name="entities['{{entity}}']['browse']" id="entities_{{entity}}_browse">
 							<label class="form-check-label" for="entities_{{entity}}_browse">
 								BROWSE
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="read" name="entities[{{loop.index0}}][read]" id="entities_{{entity}}_read">
+							<input class="form-check-input" type="checkbox" value="read" name="entities[{{entity}}][read]" id="entities_{{entity}}_read">
 							<label class="form-check-label" for="entities_{{entity}}_read">
 								READ
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="1" name="entities[{{loop.index0}}][edit]" id="entities_{{entity}}_edit">
+							<input class="form-check-input" type="checkbox" value="edit" name="entities[{{entity}}][edit]" id="entities_{{entity}}_edit">
 							<label class="form-check-label" for="entities_{{entity}}_edit">
 								EDIT
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="1" name="entities[{{loop.index0}}][add]" id="entities_{{entity}}_add">
+							<input class="form-check-input" type="checkbox" value="add" name="entities[{{entity}}][add]" id="entities_{{entity}}_add">
 							<label class="form-check-label" for="entities_{{entity}}_add">
 								ADD
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="1" name="entities[{{loop.index0}}][delete]" id="entities_{{entity}}_delete">
+							<input class="form-check-input" type="checkbox" value="delete" name="entities[{{entity}}][delete]" id="entities_{{entity}}_delete">
 							<label class="form-check-label" for="entities_{{entity}}_delete">
 								DELETE
 							</label>
@@ -60,11 +60,10 @@
 
 			</form>
 
-<button type="button" class="btn btn-primary" onclick="submitform()" id="submitform">Créer le token</button>
-            <p id="demo"></p>
-
 		</div>
-		
+		<div class="d-flex justify-content-center">
+			<button type="button" class="btn btn-primary" onclick="submitform()" id="submitform">Créer le token</button>
+		</div>
 		
 	</section>
 {% endblock %}
@@ -75,9 +74,17 @@
 
 	  function submitform() {
 
-		var form = document.getElementById('formToken');
-		var formData = new FormData(form);	
-		console.log(Object.fromEntries(formData));
+		let entitiesConfig = new Array();
+		let entities = document.querySelectorAll('.entityPermissions');
+		entities.forEach(function(entity){
+			let checkboxes = entity.querySelectorAll('input:checked');
+			let values = new Array();
+			checkboxes.forEach(function(checkbox){
+				values.push(checkbox.value);
+			});
+			entitiesConfig.push({entity:entity.dataset.entity, values:values});
+		});
+
 
 		const ajax = async (config) => {
 			const request = await fetch(config.url, {
@@ -97,11 +104,9 @@
 		response = ajax({
 			method: 'POST',
 			url: 'save',
-			payload: {"name": "Stackoverflow"}
+			payload: {token:document.getElementById("keyName").value, entities:entitiesConfig}
 		})
 
-		document.getElementById("formToken").innerHTML = "Hello World"; 
-		 console.log(ajax);
 		}
 		
 	</script>
