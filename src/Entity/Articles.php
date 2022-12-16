@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     security: "is_granted('ROLE_BROWSE')",
     operations: [
         new GetCollection(
-            security: "is_granted('ROLE_BROWSE')", 
+            security: "is_granted('ROLE_ARTICLE_BROWSE')", 
             securityMessage: 'Vous devez etre connecté pour voir les articles.'
         ),
         new Get(

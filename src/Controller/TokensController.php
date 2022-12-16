@@ -75,40 +75,36 @@ class TokensController extends AbstractController
     {
         $entities = ["article", "category"];
         // if ($request->request->count() > 0) {
-            $payload = $request->getContent();
-            $data = json_decode($payload);
-            // dd($payload);
-            $permission = $data->entities; 
-            $data->entities = json_encode($permission);
-            // dd($permission);
+        $payload = $request->getContent();
+        $data = json_decode($payload);
+        // dd($payload);
+        $permission = $data->entities;
+        $data->entities = json_encode($permission);
+        // dd($permission);
 
+        $strTotal = 35;
+        $token = new Tokens();
+        //Stockez toutes les lettres possibles dans une chaîne.
+        $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $key = '';
+        // Générez un index aléatoire de 0 à la longueur de la chaîne -1.
+        for ($i = 0; $i < $strTotal; $i++) {
+            $index = rand(0, strlen($str) - 1);
+            $key .= $str[$index];
+        }
 
-            $strTotal = 35;
-            $token = new Tokens();
-            //Stockez toutes les lettres possibles dans une chaîne.
-            $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $key = '';
-            // Générez un index aléatoire de 0 à la longueur de la chaîne -1.
-            for ($i = 0; $i < $strTotal; $i++) {
-                $index = rand(0, strlen($str) - 1);
-                $key .= $str[$index];
-            }
+        $token->setKey($key);
+        $token->setKeyName($data->token);
+        $token->setPermission($data->entities);
+        $token->setUser($this->getUser());
 
-            $token->setKey($key);
-            $token->setKeyName($data->token);
-            $token->setPermission($data->entities);
-            $token->setUser($this->getUser());
-
-            $tokensRepository->save($token, true);
-            // dd($token);
+        $tokensRepository->save($token, true);
+        // dd($token);
         // }
         // dd($token);
         return new JsonResponse([
-            'success' => true,
-            // 'keyName' => $token->getKeyName(),
-            // 'entities' => $token->getPermission([]),
+            'success' => true
         ]);
-        
     }
 
 
