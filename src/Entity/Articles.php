@@ -24,19 +24,19 @@ use Symfony\Component\Validator\Constraints as Assert;
             securityMessage: 'Vous devez etre connecté pour voir les articles.'
         ),
         new Get(
-            security: "is_granted('ROLE_USER') and object.user == user", 
+            security: "is_granted('ROLE_ARTICLE_READ') and object.user == user", 
             securityMessage: 'Vous devez etre l\'auteur de l\'article pour le voir.'
         ),
         new Put(
-            securityPostDenormalize: "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)", 
+            securityPostDenormalize: "is_granted('ROLE_ARTICLE_EDIT') or (object.user == user and previous_object.user == user)", 
             securityPostDenormalizeMessage: 'Vous ne pouvez pas modifier l\'article si vous n\'etes pas administrateur et l\'auteur.'
         ),
         new Post(
-            security: "is_granted('ROLE_ADMIN')", 
+            security: "is_granted('ROLE_ARTICLE_ADD')", 
             securityMessage: 'Seul les administrateurs peuvent créer de nouveaux articles.'
         ),
         new Delete(
-            security: "is_granted('ROLE_ADMIN')", 
+            security: "is_granted('ROLE_ARTICLE_DELETE)", 
             securityMessage: 'Seul les administrateurs peuvent supprimer article.'
         )
     ]
